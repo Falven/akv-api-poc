@@ -24,7 +24,6 @@ class AKVClient
     private $apiVersion = '2016-10-01';
     private $resource = 'https://vault.azure.net';
     private $grantType = 'client_credentials';
-    private $proxy = '127.0.0.1:5555';
 
     /*
      * The following code will POST to the Azure Oauth/Token endpoint to get a Bearer Token.
@@ -37,7 +36,6 @@ class AKVClient
         {
             curl_setopt_array($ch, array(
                 CURLOPT_URL => sprintf('https://login.microsoftonline.com/%s/oauth2/token', $this->tenantId),
-                CURLOPT_PROXY => $this->proxy,
                 CURLOPT_POST => true,
                 CURLOPT_POSTFIELDS => http_build_query(array(
                     'grant_type' => $this->grantType,
@@ -87,7 +85,6 @@ class AKVClient
                      $this->vaultUri,
                      $this->secretName,
                      http_build_query(array('api-version' => $this->apiVersion))),
-                    CURLOPT_PROXY => $this->proxy,
                     CURLOPT_HTTPHEADER => array(
                         'Authorization: Bearer ' . $bearerResponse->access_token,
                         'Content-Type: application/json'

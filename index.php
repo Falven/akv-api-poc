@@ -5,22 +5,35 @@
     <title>PHP AKV POC</title>
   </head>
   <body>
-<?php
+    <?php
 
-include ('./PHPAzure/KeyVault/AKVClient.php');
+      function sanitize_input($data)
+      {
+        return htmlspecialchars(trim($data));
+      }
 
-use PHPAzure\KeyVault\AKVClient;
+      if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["secretName"]))
+      {
+        $secretName = sanitize_input($_POST["secretName"]);
+      }
 
-echo "Hello Azure!<br />";
-echo "Initializing AKVClient...<br />";
+      include ('./PHPAzure/KeyVault/AKVClient.php');
 
-$ac = new AKVClient();
-$secretResponse = $ac->getSecret();
-if($secretResponse)
-{
-  echo $secretResponse->value;
-}
+      use PHPAzure\KeyVault\AKVClient;
 
-?>
+      $ac = new AKVClient();
+      $secretResponse = $ac->getSecret();
+      if($secretResponse)
+      {
+        $secretValue = $secretResponse->value;
+      }
+    ?>
+
+    <h2>TRUE Azure Key Vault POC</h2>
+    <form method="post" action="<?=htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+      Secret name: <input type="text" name="secretName" value="<?= $secretName;?>">
+      Secret value: <?=$secretValue?>
+      <input type="submit" name="submit" value="Retrieve">
+    </form>
   </body>
 </html>
