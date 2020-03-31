@@ -19,7 +19,8 @@ class AKVClient
     private $message = 'Hello from within AKVClient.';
 
     // method declaration
-    function getMessage() {
+    function getMessage()
+    {
         return $this->message;
     }
 
