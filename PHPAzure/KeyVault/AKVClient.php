@@ -16,11 +16,11 @@ $testVar = 'This is a test var.';
 class AKVClient
 {
     // property declaration
-    // $var = ;
+    private $message = 'Hello from within AKVClient.';
 
     // method declaration
-    function displayVar() {
-        return 'Hello from within AKVClient.';
+    function getMessage() {
+        return $this->message;
     }
 
     // Method: POST, PUT, GET etc

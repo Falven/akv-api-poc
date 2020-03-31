@@ -15,8 +15,8 @@ echo "Hello Azure!<br />";
 echo "Initializing AKVClient...<br />";
 echo "Test Var: $testVar";
 
-$aKVClient = new AKVClient();
-echo $aKVClient->displayVar();
+$ac = new AKVClient();
+echo $ac->getMessage();
 
 ?>
   </body>
