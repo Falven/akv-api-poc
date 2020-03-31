@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>PHP AKV POC</title>
+    <style>
+      .error {color: #FF0000;}
+    </style>
   </head>
   <body>
     <?php
@@ -43,7 +46,7 @@
       Secret name: <input type="text" name="secretName" value="<?= $secretName;?>">
       <br />
       <br />
-      Secret value: <?=$secretValue?>
+      Secret value: <span class="<?php if(property_exists($secretResponse, 'error')) { echo 'error'; } ?>"><?=$secretValue?></span>
       <br />
       <br />
       <input type="submit" name="submit" value="Retrieve">
