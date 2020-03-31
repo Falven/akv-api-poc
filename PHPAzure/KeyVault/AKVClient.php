@@ -30,7 +30,7 @@ class AKVClient
      * The following code will POST to the Azure Oauth/Token endpoint to get a Bearer Token.
      * The token will used in the Authorization header when you make the GetSecret request.
      */
-    public function getBearerToken()
+    private function getBearerToken()
     {
         $ch = curl_init();
         if($ch)
@@ -39,7 +39,6 @@ class AKVClient
                 CURLOPT_URL => sprintf('https://login.microsoftonline.com/%s/oauth2/token', $this->tenantId),
                 CURLOPT_PROXY => $this->proxy,
                 CURLOPT_POST => true,
-                CURLOPT_VERBOSE => true,
                 CURLOPT_POSTFIELDS => http_build_query(array(
                     'grant_type' => $this->grantType,
                     'client_id' => $this->clientId,
@@ -66,17 +65,61 @@ class AKVClient
             // Close cURL resource to free up system resources
             curl_close($ch);
 
-            if($result)
+            if($response)
             {
-                return json_decode($result);
+                return json_decode($response);
             }
-            return $result;
+            return $response;
         }
     }
 
     function getSecret()
     {
+        $bearerResponse = $this->getBearerToken();
 
+        if($bearerResponse)
+        {
+            $ch = curl_init();
+            if($ch)
+            {
+                curl_setopt_array($ch, array(
+                    CURLOPT_URL => sprintf('%s/secrets/%s/?%s',
+                     $this->vaultUri,
+                     $this->secretName,
+                     http_build_query(array('api-version' => $this->apiVersion))),
+                    CURLOPT_PROXY => $this->proxy,
+                    CURLOPT_HTTPHEADER => array(
+                        'Authorization: Bearer ' . $bearerResponse->access_token,
+                        'Content-Type: application/json'
+                    ),
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_SSL_VERIFYHOST => false,
+                    CURLOPT_SSL_VERIFYPEER => false,
+                    CURLOPT_TIMEOUT => 5
+                ));
+    
+                $reqInfo = curl_getinfo($ch);
+    
+                // Execute request
+                $response = curl_exec($ch);
+    
+                // Retry 3 times while CURLE_OPERATION_TIMEDOUT error occurrs
+                $retry = 0;
+                while(curl_errno($ch) == 28 && $retry++ < 3)
+                {
+                    $response = curl_exec($ch);
+                }
+    
+                // Close cURL resource to free up system resources
+                curl_close($ch);
+    
+                if($response)
+                {
+                    return json_decode($response);
+                }
+                return $response;
+            }
+        }
     }
 }
 ?>

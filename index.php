@@ -15,7 +15,11 @@ echo "Hello Azure!<br />";
 echo "Initializing AKVClient...<br />";
 
 $ac = new AKVClient();
-echo $ac->getBearerToken();
+$secretResponse = $ac->getSecret();
+if($secretResponse)
+{
+  echo $secretResponse->value;
+}
 
 ?>
   </body>
