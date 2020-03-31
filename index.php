@@ -29,9 +29,9 @@ class ClassB
 
     function callA()
     {
-    $classA = new ClassA();
-    $name = $classA->getName();
-    echo $name;    //Prints John
+        $classA = new ClassA();
+        $name = $classA->getName();
+        echo $name;    //Prints John
     }
 }
 
