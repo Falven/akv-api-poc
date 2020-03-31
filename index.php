@@ -11,11 +11,11 @@ include './PHPAzure/KeyVault/AKVClient.php';
 
 use AKVClient;
 
-echo "Hello Azure!<br />\n";
-echo "Initializing AKVClient<br />\n";
-$akvVar = new AKVClient();
+echo "Hello Azure!<br />";
+echo "Initializing AKVClient<br />";
 
-echo $akvVar->displayVar(), "<br />\n";
+$akvVar = new AKVClient();
+echo $akvVar->displayVar(), "<br />";
 
 ?>
   </body>
