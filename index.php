@@ -9,7 +9,7 @@
 
 include ('./PHPAzure/KeyVault/AKVClient.php');
 
-use AKVClient;
+use PHPAzure\KeyVault\AKVClient;
 
 echo "Hello Azure!<br />";
 echo "Initializing AKVClient...<br />";
