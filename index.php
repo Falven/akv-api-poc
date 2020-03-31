@@ -13,6 +13,7 @@ use AKVClient;
 
 echo "Hello Azure!<br />";
 echo "Initializing AKVClient...<br />";
+echo "Test Var: $testVar";
 
 $akvVar = new AKVClient();
 echo $akvVar->displayVar(), "<br />";

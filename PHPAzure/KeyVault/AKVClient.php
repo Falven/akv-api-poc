@@ -11,6 +11,8 @@
 
 namespace PHPAzure\KeyVault;
 
+$testVar = 'This is a test var.';
+
 class AKVClient
 {
     // property declaration
