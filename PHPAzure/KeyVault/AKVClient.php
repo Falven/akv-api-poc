@@ -15,92 +15,68 @@ $testVar = 'This is a test var.';
 
 class AKVClient
 {
-
     private $clientId = 'bc680ae1-00cd-423b-b5c3-41584e162472';
     private $clientSecret = '22a4ae3d-e214-42b9-9a91-45247cec5f0d';
-    private $tenantId = 'tenantId';
+    private $tenantId = '72f988bf-86f1-41af-91ab-2d7cd011db47';
     private $subscriptionId = '4be583c6-356a-4338-9649-f7ae5c77372e';
     private $vaultUri = 'https://kv-trueakv.vault.azure.net/';
     private $secretName = 'truesecretname';
     private $apiVersion = '2016-10-01';
     private $resource = 'https://vault.azure.net';
+    private $grantType = 'client_credentials';
+    private $proxy = '127.0.0.1:5555';
 
     /*
      * The following code will POST to the Azure Oauth/Token endpoint to get a Bearer Token.
      * The token will used in the Authorization header when you make the GetSecret request.
      */
-    function getBearerToken()
+    public function getBearerToken()
     {
-        $ch = curl_init('https://login.microsoftonline.com/' + $this->$tenantId + '/oauth2/token');
+        $ch = curl_init();
         if($ch)
         {
-            // Post request
-            curl_setopt($ch, CURLOPT_POST, true);
-            // Request headers
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-            // Request body
-            $body = urlencode(sprintf('[
-                {key: "grant_type", value: "client_credentials", disabled: false},
-                {key: "client_id", value: %s, disabled: false},
-                {key: "client_secret", value: %s, disabled: false},
-                {key: "resource", value: %s, disabled: false}
-            ]'), $this->$clientId, $this->$clientSecret, $this->$resource);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-            // Execute request
-            return parseBearerToken(curl_exec($ch));
-        }
-    }
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => sprintf('https://login.microsoftonline.com/%s/oauth2/token', $this->tenantId),
+                CURLOPT_PROXY => $this->proxy,
+                CURLOPT_POST => true,
+                CURLOPT_VERBOSE => true,
+                CURLOPT_POSTFIELDS => http_build_query(array(
+                    'grant_type' => $this->grantType,
+                    'client_id' => $this->clientId,
+                    'client_secret' => $this->clientSecret,
+                    'resource' => $this->resource
+                )),
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_SSL_VERIFYPEER => false
+            ));
 
-    function parseBearerToken($postResult)
-    {
-        echo $postResult;
+            $reqInfo = curl_getinfo($ch);
+
+            // Execute request
+            $response = curl_exec($ch);
+
+            // Retry 3 times while CURLE_OPERATION_TIMEDOUT error occurrs
+            $retry = 0;
+            while(curl_errno($ch) == 28 && $retry++ < 3)
+            {
+                $response = curl_exec($ch);
+            }
+
+            // Close cURL resource to free up system resources
+            curl_close($ch);
+
+            if($result)
+            {
+                return json_decode($result);
+            }
+            return $result;
+        }
     }
 
     function getSecret()
     {
 
-    }
-
-    // method declaration
-    function getMessage()
-    {
-        return $this->message;
-    }
-
-    // Method: POST, PUT, GET etc
-    // Data: array("param" => "value") ==> index.php?param=value
-    public function callAPI($method, $url, $data = false)
-    {
-        
-
-        switch ($method)
-        {
-            case "POST":
-                curl_setopt($curl, CURLOPT_POST, 1);
-
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                break;
-            case "PUT":
-                curl_setopt($curl, CURLOPT_PUT, 1);
-                break;
-            default:
-                if ($data)
-                    $url = sprintf("%s?%s", $url, http_build_query($data));
-        }
-
-        // Optional Authentication:
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_USERPWD, "username:password");
-
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
-        $result = curl_exec($curl);
-
-        curl_close($curl);
-
-        return $result;
     }
 }
 ?>
