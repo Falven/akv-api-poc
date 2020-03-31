@@ -1,6 +1,8 @@
 <?php
 
-include 'Azure/KeyVault/AKVClient.php';
+include 'PHPAzure/KeyVault/AKVClient.php';
+
+use AKVClient;
 
 echo "Hello Azure!";
 

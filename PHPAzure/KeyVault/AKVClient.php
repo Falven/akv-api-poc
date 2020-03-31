@@ -9,7 +9,7 @@
  * @copyright 2020 Microsoft Corporation
  */
 
-namespace Azure\KeyVault;
+namespace PHPAzure\KeyVault;
 
 class AKVClient
 {
