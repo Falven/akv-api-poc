@@ -23,7 +23,7 @@ class AKVClient
 
     // Method: POST, PUT, GET etc
     // Data: array("param" => "value") ==> index.php?param=value
-    public function CallAPI($method, $url, $data = false)
+    public function callAPI($method, $url, $data = false)
     {
         $curl = curl_init();
 
