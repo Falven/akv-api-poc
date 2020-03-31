@@ -7,7 +7,7 @@
   <body>
 <?php
 
-include 'PHPAzure/KeyVault/AKVClient.php';
+include './PHPAzure/KeyVault/AKVClient.php';
 
 use AKVClient;
 
