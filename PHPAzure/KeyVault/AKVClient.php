@@ -20,7 +20,6 @@ class AKVClient
     private $tenantId = '72f988bf-86f1-41af-91ab-2d7cd011db47';
     private $subscriptionId = '4be583c6-356a-4338-9649-f7ae5c77372e';
     private $vaultUri = 'https://kv-trueakv.vault.azure.net/';
-    private $secretName = 'truesecretname';
     private $apiVersion = '2016-10-01';
     private $resource = 'https://vault.azure.net';
     private $grantType = 'client_credentials';
@@ -71,7 +70,7 @@ class AKVClient
         }
     }
 
-    function getSecret()
+    function getSecret($secretName)
     {
         $bearerResponse = $this->getBearerToken();
 
@@ -83,7 +82,7 @@ class AKVClient
                 curl_setopt_array($ch, array(
                     CURLOPT_URL => sprintf('%s/secrets/%s/?%s',
                      $this->vaultUri,
-                     $this->secretName,
+                     $secretName,
                      http_build_query(array('api-version' => $this->apiVersion))),
                     CURLOPT_HTTPHEADER => array(
                         'Authorization: Bearer ' . $bearerResponse->access_token,
