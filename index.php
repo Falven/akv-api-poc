@@ -16,7 +16,7 @@ echo "Initializing AKVClient...<br />";
 echo "Test Var: $testVar";
 
 $aKVClient = new AKVClient();
-echo $aKVClient->displayVar(), "<br />";
+echo $aKVClient->displayVar();
 
 ?>
   </body>

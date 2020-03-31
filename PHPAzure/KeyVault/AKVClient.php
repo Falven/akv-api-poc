@@ -20,7 +20,7 @@ class AKVClient
 
     // method declaration
     function displayVar() {
-        echo 'Hello from within AKVClient.';
+        return 'Hello from within AKVClient.';
     }
 
     // Method: POST, PUT, GET etc
