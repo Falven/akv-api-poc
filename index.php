@@ -29,7 +29,7 @@
       $configFile = realpath('./akv.config.json');
 
       $ac = new AKVClient();
-      $ac->readConfig($configFile);
+      $ac->loadConfig($configFile);
       $secretResponse = $ac->getSecret($secretName);
 
       if($secretResponse)
