@@ -11,8 +11,6 @@
 
 namespace PHPAzure\KeyVault;
 
-$testVar = 'This is a test var.';
-
 class AKVClient
 {
     private $clientId = 'bc680ae1-00cd-423b-b5c3-41584e162472';
