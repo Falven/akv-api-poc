@@ -25,7 +25,7 @@ class AKVClient
             throw new FileException('Could not find config: ' . $file);
         }
         $configStr = file_get_contents($file);
-        $this->config = json_decode($configStr, true);
+        $this->config = json_decode($configStr);
     }
 
     /*
