@@ -1,9 +1,9 @@
 <?php
 
 /**
- * PHP version 7.4
+ * Tested using PHP version 7.4
  *
- * @category  Microsoft Azure
+ * @category  Microsoft Azure Key Vault
  *
  * @author    Fran Aguilera <fraguile@microsoft.com>
  * @copyright 2020 Microsoft Corporation
@@ -13,18 +13,24 @@ namespace PHPAzure\KeyVault;
 
 class AKVClient
 {
-    private $clientId = 'bc680ae1-00cd-423b-b5c3-41584e162472';
-    private $clientSecret = '22a4ae3d-e214-42b9-9a91-45247cec5f0d';
-    private $tenantId = '72f988bf-86f1-41af-91ab-2d7cd011db47';
-    private $subscriptionId = '4be583c6-356a-4338-9649-f7ae5c77372e';
-    private $vaultUri = 'https://kv-trueakv.vault.azure.net/';
-    private $apiVersion = '2016-10-01';
-    private $resource = 'https://vault.azure.net';
-    private $grantType = 'client_credentials';
+    private $config;
+
+    /*
+     * Reads confiuguration from provided JSON file.
+     */
+    function loadConfig($file)
+    {
+        if (!file_exists($file))
+        {
+            throw new FileException('Could not find config: ' . $file);
+        }
+        $configStr = file_get_contents($file);
+        $this->config = json_decode($configStr, true);
+    }
 
     /*
      * The following code will POST to the Azure Oauth/Token endpoint to get a Bearer Token.
-     * The token will used in the Authorization header when you make the GetSecret request.
+     * The token will used in the Authorization header when you make a GetSecret request.
      */
     private function getBearerToken()
     {
@@ -32,13 +38,13 @@ class AKVClient
         if($ch)
         {
             curl_setopt_array($ch, array(
-                CURLOPT_URL => sprintf('https://login.microsoftonline.com/%s/oauth2/token', $this->tenantId),
+                CURLOPT_URL => sprintf('https://login.microsoftonline.com/%s/oauth2/token', $this->config->tenantId),
                 CURLOPT_POST => true,
                 CURLOPT_POSTFIELDS => http_build_query(array(
-                    'grant_type' => $this->grantType,
-                    'client_id' => $this->clientId,
-                    'client_secret' => $this->clientSecret,
-                    'resource' => $this->resource
+                    'grant_type' => 'client_credentials',
+                    'client_id' => $this->config->clientId,
+                    'client_secret' => $this->config->clientSecret,
+                    'resource' => 'https://vault.azure.net'
                 )),
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_SSL_VERIFYHOST => false,
@@ -79,9 +85,9 @@ class AKVClient
             {
                 curl_setopt_array($ch, array(
                     CURLOPT_URL => sprintf('%s/secrets/%s/?%s',
-                     $this->vaultUri,
-                     $secretName,
-                     http_build_query(array('api-version' => $this->apiVersion))),
+                    $this->config->vaultUri,
+                    $secretName,
+                    http_build_query(array('api-version' => '2016-10-01'))),
                     CURLOPT_HTTPHEADER => array(
                         'Authorization: Bearer ' . $bearerResponse->access_token,
                         'Content-Type: application/json'
@@ -116,4 +122,5 @@ class AKVClient
         }
     }
 }
+
 ?>
