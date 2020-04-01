@@ -26,12 +26,12 @@
 
       use PHPAzure\KeyVault\AKVClient;
 
-      $configFile = 'akv.config.json';
+      $configFile = realpath('./akv.config.json');
 
       $ac = new AKVClient();
       $ac->readConfig($configFile);
       $secretResponse = $ac->getSecret($secretName);
-      
+
       if($secretResponse)
       {
         if(property_exists($secretResponse, 'error'))
