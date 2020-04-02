@@ -22,7 +22,7 @@
         $secretName = sanitize_input($_POST["secretName"]);
       }
 
-      include ('./PHPAzure/KeyVault/AKVClient.php');
+      include ('./AzureSDK/KeyVault/AKVClient.php');
 
       use PHPAzure\KeyVault\AKVClient;
 

@@ -4,13 +4,13 @@ languages:
 - php
 products:
 - azure
-description: "This sample demonstrates a tiny Hello World PHP app for App Service."
-urlFragment: php-docs-hello-world
+description: "This sample demonstrates a simple PHP app that queries the Azure Key Vault Rest API."
+urlFragment: php-docs-keyvault
 ---
 
-# PHP Hello World
+# PHP Azure Key Vault
 
-This sample demonstrates a tiny Hello World PHP app for [App Service](https://docs.microsoft.com/azure/app-service).
+This sample demonstrates a simple PHP app that queries the Azure Key Vault Rest API. (https://docs.microsoft.com/en-us/rest/api/keyvault/).
 
 ## Contributing
 

@@ -1,9 +1,11 @@
 <?php
 
 /**
+ * Client that reads Azure key Vault configuration from a configuration file
+ * and can retrieve a secret from Key Vault.
  * Tested using PHP version 7.4
  *
- * @category  Microsoft Azure Key Vault
+ * @category  Microsoft Azure Key Vault Client
  *
  * @author    Fran Aguilera <fraguile@microsoft.com>
  * @copyright 2020 Microsoft Corporation
@@ -18,7 +20,7 @@ class AKVClient
     /*
      * Reads confiuguration from provided JSON file.
      */
-    function loadConfig($file)
+    public function loadConfig($file)
     {
         if (!file_exists($file))
         {
@@ -74,7 +76,7 @@ class AKVClient
         }
     }
 
-    function getSecret($secretName)
+    public function getSecret($secretName)
     {
         $bearerResponse = $this->getBearerToken();
 
