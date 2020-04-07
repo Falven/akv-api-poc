@@ -20,13 +20,13 @@
         $secretName = sanitize_input($_POST["secretName"]);
       }
 
-      include ('./AzureSDK/KeyVault/AKVClient.php');
+      include ('./AzureSDK/KeyVault/Client.php');
 
-      use PHPAzure\KeyVault\AKVClient;
+      use PHPAzure\KeyVault\Client;
 
       $configFile = realpath('../akv.config.json');
 
-      $ac = new AKVClient($configFile);
+      $ac = new Client($configFile);
       $secretResponse = $ac->getSecret($secretName);
 
       if($secretResponse) {

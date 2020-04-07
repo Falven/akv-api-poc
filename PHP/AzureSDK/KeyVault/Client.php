@@ -13,7 +13,7 @@
 
 namespace PHPAzure\KeyVault;
 
-class AKVClient
+class Client
 {
     private $config;
 
