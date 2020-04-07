@@ -22,7 +22,7 @@
 
       include ('./AzureSDK/KeyVault/Client.php');
 
-      use PHPAzure\KeyVault\Client;
+      use AzureSDK\KeyVault\Client;
 
       $configFile = realpath('../akv.config.json');
 

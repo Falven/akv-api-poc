@@ -11,7 +11,7 @@
  * @copyright 2020 Microsoft Corporation
  */
 
-namespace PHPAzure\KeyVault;
+namespace AzureSDK\KeyVault;
 
 class Client
 {
