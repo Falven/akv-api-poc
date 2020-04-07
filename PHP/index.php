@@ -10,15 +10,13 @@
   <body>
     <?php
 
-      function sanitize_input($data)
-      {
+      function sanitize_input($data) {
         return htmlspecialchars(trim($data));
       }
 
       // truesecretname
       $secretName = "";
-      if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["secretName"]))
-      {
+      if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["secretName"])) {
         $secretName = sanitize_input($_POST["secretName"]);
       }
 
@@ -26,20 +24,15 @@
 
       use PHPAzure\KeyVault\AKVClient;
 
-      $configFile = realpath('./akv.config.json');
+      $configFile = realpath('../akv.config.json');
 
-      $ac = new AKVClient();
-      $ac->loadConfig($configFile);
+      $ac = new AKVClient($configFile);
       $secretResponse = $ac->getSecret($secretName);
 
-      if($secretResponse)
-      {
-        if(property_exists($secretResponse, 'error'))
-        {
+      if($secretResponse) {
+        if(property_exists($secretResponse, 'error')) {
           $secretValue = $secretResponse->error->message;
-        }
-        else
-        {
+        } else {
           $secretValue = $secretResponse->value;
         }
       }

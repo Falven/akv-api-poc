@@ -20,10 +20,8 @@ class AKVClient
     /*
      * Reads configuration from provided JSON file.
      */
-    public function loadConfig($file)
-    {
-        if (!file_exists($file))
-        {
+    function __construct($file) {
+        if (!file_exists($file)) {
             throw new FileException('Could not find config: ' . $file);
         }
         $configStr = file_get_contents($file);
@@ -34,11 +32,9 @@ class AKVClient
      * The following code will POST to the Azure Oauth/Token endpoint to get a Bearer Token.
      * The token will used in the Authorization header when you make a GetSecret request.
      */
-    private function getBearerToken()
-    {
+    private function getBearerToken() {
         $ch = curl_init();
-        if($ch)
-        {
+        if($ch) {
             curl_setopt_array($ch, array(
                 CURLOPT_URL => sprintf('https://login.microsoftonline.com/%s/oauth2/token', $this->config->tenantId),
                 CURLOPT_POST => true,
@@ -60,36 +56,32 @@ class AKVClient
 
             // Retry 3 times while CURLE_OPERATION_TIMEDOUT error occurrs
             $retry = 0;
-            while(curl_errno($ch) == 28 && $retry++ < 3)
-            {
+            while(curl_errno($ch) == 28 && $retry++ < 3) {
                 $response = curl_exec($ch);
             }
 
             // Close cURL resource to free up system resources
             curl_close($ch);
 
-            if($response)
-            {
+            if($response) {
                 return json_decode($response);
             }
             return $response;
         }
     }
 
-    public function getSecret($secretName)
-    {
+    public function getSecret($secretName) {
         $bearerResponse = $this->getBearerToken();
 
-        if($bearerResponse)
-        {
+        if($bearerResponse) {
             $ch = curl_init();
-            if($ch)
-            {
+            if($ch) {
                 curl_setopt_array($ch, array(
-                    CURLOPT_URL => sprintf('%s/secrets/%s/?%s',
-                    $this->config->vaultUri,
-                    $secretName,
-                    http_build_query(array('api-version' => '2016-10-01'))),
+                    CURLOPT_URL => sprintf(
+                        '%s/secrets/%s/?%s',
+                        $this->config->vaultUri,
+                        $secretName,
+                        http_build_query(array('api-version' => '2016-10-01'))),
                     CURLOPT_HTTPHEADER => array(
                         'Authorization: Bearer ' . $bearerResponse->access_token,
                         'Content-Type: application/json'
@@ -107,16 +99,14 @@ class AKVClient
     
                 // Retry 3 times while CURLE_OPERATION_TIMEDOUT error occurrs
                 $retry = 0;
-                while(curl_errno($ch) == 28 && $retry++ < 3)
-                {
+                while(curl_errno($ch) == 28 && $retry++ < 3) {
                     $response = curl_exec($ch);
                 }
     
                 // Close cURL resource to free up system resources
                 curl_close($ch);
     
-                if($response)
-                {
+                if($response) {
                     return json_decode($response);
                 }
                 return $response;
