@@ -18,7 +18,7 @@ class AKVClient
     private $config;
 
     /*
-     * Reads confiuguration from provided JSON file.
+     * Reads configuration from provided JSON file.
      */
     public function loadConfig($file)
     {
