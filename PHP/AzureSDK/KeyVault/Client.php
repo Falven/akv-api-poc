@@ -22,7 +22,7 @@ class Client
      */
     function __construct($file) {
         if (!file_exists($file)) {
-            throw new FileException('Could not find config: ' . $file);
+            throw new \Exception('Could not find config: ' . $file);
         }
         $configStr = file_get_contents($file);
         $this->config = json_decode($configStr);
