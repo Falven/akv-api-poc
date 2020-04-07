@@ -24,5 +24,6 @@ my $ac = new AzureSDK::KeyVault::Client($configPath);
 
 my $secret_name = 'truesecretname';
 print sprintf("Secret name: %s\n", $secret_name);
+
 my $secretResponse = $ac->get_secret($secret_name);
 print sprintf("Secret value: %s\n", $secretResponse->{'value'});
