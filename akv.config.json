@@ -1,6 +1,6 @@
 {
-    "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-    "clientId": "bc680ae1-00cd-423b-b5c3-41584e162472",
-    "clientSecret": "22a4ae3d-e214-42b9-9a91-45247cec5f0d",
-    "vaultUri": "https://kv-trueakv.vault.azure.net/"
+    "tenantId": "",
+    "clientId": "",
+    "clientSecret": "",
+    "vaultUri": ""
 }
