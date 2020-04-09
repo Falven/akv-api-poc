@@ -1,16 +1,18 @@
 ---
 page_type: sample
 languages:
-- php
+  - php
+  - perl
+  - python
 products:
-- azure
-description: "This sample demonstrates a simple PHP app that queries the Azure Key Vault Rest API."
-urlFragment: php-docs-keyvault
+  - azure
+description: "This sample demonstrates three different applications that query the Azure Key Vault Rest API."
+urlFragment: docs-keyvault
 ---
 
 # PHP Azure Key Vault
 
-This sample demonstrates a simple PHP app that queries the Azure Key Vault Rest API. (https://docs.microsoft.com/en-us/rest/api/keyvault/).
+This sample demonstrates three different applications that query the Azure Key Vault Rest API. (https://docs.microsoft.com/en-us/rest/api/keyvault/).
 
 ## Contributing
 
