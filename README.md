@@ -10,7 +10,7 @@ description: "This sample demonstrates three different applications that query t
 urlFragment: docs-keyvault
 ---
 
-# PHP Azure Key Vault
+# Azure Key Vault API
 
 This sample demonstrates three different applications that query the Azure Key Vault Rest API. (https://docs.microsoft.com/en-us/rest/api/keyvault/).
 
