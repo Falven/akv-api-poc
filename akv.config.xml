@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-   <clientId>bc680ae1-00cd-423b-b5c3-41584e162472</clientId>
-   <clientSecret>22a4ae3d-e214-42b9-9a91-45247cec5f0d</clientSecret>
-   <tenantId>72f988bf-86f1-41af-91ab-2d7cd011db47</tenantId>
-   <vaultUri>https://kv-trueakv.vault.azure.net/</vaultUri>
-</root>
