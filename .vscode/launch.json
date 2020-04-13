@@ -5,13 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Listen for XDebug",
+      "name": "PowerShell Launch Current File",
+      "type": "PowerShell",
+      "request": "launch",
+      "script": "${file}",
+      "cwd": "${file}"
+    },
+    {
+      "name": "PHP Listen for XDebug",
       "type": "php",
       "request": "launch",
       "port": 9000
     },
     {
-      "name": "Launch currently open script",
+      "name": "PHP Launch Current File",
       "type": "php",
       "request": "launch",
       "program": "${file}",
@@ -19,12 +26,12 @@
       "port": 9000
     },
     {
+      "name": "Perl Launch Current File",
       "type": "perl",
       "request": "launch",
       "console": "integratedTerminal",
       "exec": "C:/Strawberry/perl/bin/perl.exe",
       "execArgs": [],
-      "name": "Perl Debug",
       "root": "${workspaceRoot}",
       "program": "${workspaceRoot}\\${relativeFile}",
       "inc": [],
