@@ -35,7 +35,6 @@ az keyvault create --name $KEYVAULT_NAME --resource-group $RESOURCE_GROUP_NAME
 
 Write-Host "$($NL)Get our Key Vault's URI" -ForegroundColor DarkBlue
 $KEYVAULT_URI = $(az keyvault show --name $KEYVAULT_NAME --query properties.vaultUri -otsv)
-Write-Host $KEYVAULT_URI
 
 Write-Host "$($NL)Create our secret" -ForegroundColor DarkBlue
 az keyvault secret set --name $KEYVAULT_SECRET_NAME --vault-name $KEYVAULT_NAME --value $KEYVAULT_SECRET_VALUE
@@ -49,9 +48,10 @@ $SERVICE_PRINCIPAL_PASSWORD = $((az ad sp create-for-rbac --name $SERVICE_PRINCI
 
 Write-Host "$($NL)Get the App ID for our Service Principal" -ForegroundColor DarkBlue
 $SERVICE_PRINCIPAL_APP_ID = $(az ad sp list --display-name $SERVICE_PRINCIPAL_NAME --query [0].appId -otsv)
+Write-Host $SERVICE_PRINCIPAL_APP_ID
 
 Write-Host "$($NL)Give our Service Principal 'get' access to our Key Vault" -ForegroundColor DarkBlue
-az keyvault set-policy --name $KEYVAULT_NAME --spn $SERVICE_PRINCIPAL_NAME --secret-permissions get
+az keyvault set-policy --name $KEYVAULT_NAME --spn http://$SERVICE_PRINCIPAL_NAME --secret-permissions get
 
 Write-Host "$($NL)Get the tenant id for our account" -ForegroundColor DarkBlue
 $TENANT_ID = $(az account show --query tenantId -otsv)
