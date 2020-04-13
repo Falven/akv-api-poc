@@ -2,7 +2,7 @@
 
 # You can get this from the Azure Portal under "Navigate" select "Subscriptions" and copy the appropriate ID.
 # Or you can use the Get-AzureSubscription cmdlet.
-$SUBSCRIPTION_ID = '4be583c6-356a-4338-9649-f7ae5c77372e'
+$SUBSCRIPTION_ID = ''
 
 $RESOURCE_GROUP_NAME = 'rg-akvapipoc'
 $RESOURCE_GROUP_LOCATION = 'eastus'
