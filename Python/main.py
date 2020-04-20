@@ -25,7 +25,7 @@ credential = ClientSecretCredential(
 secret_client = SecretClient(vault_url=config['vaultUri'], credential=credential)
 
 # #Retrieve KeyVaultSecret Obj
-secret = secret_client.get_secret("truesecretname")
+secret = secret_client.get_secret("secretname")
 
 # #Output Secret Values
 print("\nResponse:")

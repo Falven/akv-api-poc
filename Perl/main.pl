@@ -22,7 +22,7 @@ use AzureSDK::KeyVault::Client;
 my $configPath = File::Spec->catdir(dirname(__FILE__), '../akv.config.json');
 my $ac = new AzureSDK::KeyVault::Client($configPath);
 
-my $secret_name = 'truesecretname';
+my $secret_name = 'secretname';
 print sprintf("Secret name: %s\n", $secret_name);
 
 my $secretResponse = $ac->get_secret($secret_name);
